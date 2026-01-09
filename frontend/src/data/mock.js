@@ -61,12 +61,12 @@ export const mockStocks = [
 ];
 
 export const mockTaches = [
-  { id: '1', titre: 'Visite de printemps', date: '2025-03-15', rucher: 'Tous', priorite: 'Haute', statut: 'Planifié', description: 'Première visite de la saison' },
-  { id: '2', titre: 'Traitement Varroa', date: '2025-01-15', rucher: 'Rucher Principal', priorite: 'Haute', statut: 'Planifié', description: 'Traitement hivernal acide oxalique' },
-  { id: '3', titre: 'Commander cire', date: '2025-02-01', rucher: '-', priorite: 'Moyenne', statut: 'Planifié', description: 'Stock bas - commander 20kg' },
-  { id: '4', titre: 'Réparation ruches', date: '2025-02-15', rucher: 'Rucher Bio', priorite: 'Basse', statut: 'Planifié', description: 'Réparer 3 toits endommagés' },
-  { id: '5', titre: 'Déclaration annuelle', date: '2025-01-31', rucher: 'Tous', priorite: 'Haute', statut: 'En cours', description: 'Télédéclaration des ruches' },
-  { id: '6', titre: 'Pose hausses', date: '2025-04-01', rucher: 'Tous', priorite: 'Haute', statut: 'Planifié', description: 'Début de miellée' }
+  { id: '1', titre: 'Visite de printemps', date: '2026-03-15', rucher: 'Tous', priorite: 'Haute', statut: 'Planifié', description: 'Première visite de la saison' },
+  { id: '2', titre: 'Traitement Varroa', date: '2026-01-15', rucher: 'Rucher Principal', priorite: 'Haute', statut: 'Planifié', description: 'Traitement hivernal acide oxalique' },
+  { id: '3', titre: 'Commander cire', date: '2026-01-12', rucher: '-', priorite: 'Moyenne', statut: 'Planifié', description: 'Stock bas - commander 20kg' },
+  { id: '4', titre: 'Réparation ruches', date: '2026-01-20', rucher: 'Rucher Bio', priorite: 'Basse', statut: 'Planifié', description: 'Réparer 3 toits endommagés' },
+  { id: '5', titre: 'Déclaration annuelle', date: '2026-01-31', rucher: 'Tous', priorite: 'Haute', statut: 'En cours', description: 'Télédéclaration des ruches' },
+  { id: '6', titre: 'Pose hausses', date: '2026-04-01', rucher: 'Tous', priorite: 'Haute', statut: 'Planifié', description: 'Début de miellée' }
 ];
 
 export const mockStats = {
