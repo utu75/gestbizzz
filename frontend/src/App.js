@@ -8,12 +8,13 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Ruchers from "./pages/Ruchers";
 import Ruches from "./pages/Ruches";
-import Recoltes from "./pages/Recoltes";
-import Sanitaire from "./pages/Sanitaire";
-import Stocks from "./pages/Stocks";
-import Calendrier from "./pages/Calendrier";
-import Rapports from "./pages/Rapports";
+import Visites from "./pages/Visites";
+import Miellerie from "./pages/Miellerie";
+import Atelier from "./pages/Atelier";
+import Inventaire from "./pages/Inventaire";
+import Parrainage from "./pages/Parrainage";
 import Settings from "./pages/Settings";
+import Admin from "./pages/Admin";
 
 // Layout
 import MainLayout from "./components/Layout/MainLayout";
@@ -24,8 +25,8 @@ const ProtectedRoute = ({ children }) => {
   
   if (loading) {
     return (
-      <div className="min-h-screen bg-slate-900 flex items-center justify-center">
-        <div className="w-12 h-12 border-4 border-amber-500 border-t-transparent rounded-full animate-spin" />
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+        <div className="w-10 h-10 border-4 border-amber-500 border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -43,8 +44,8 @@ const PublicRoute = ({ children }) => {
   
   if (loading) {
     return (
-      <div className="min-h-screen bg-slate-900 flex items-center justify-center">
-        <div className="w-12 h-12 border-4 border-amber-500 border-t-transparent rounded-full animate-spin" />
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+        <div className="w-10 h-10 border-4 border-amber-500 border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -69,6 +70,16 @@ function AppRoutes() {
         } 
       />
       
+      {/* Admin Route - Special Layout */}
+      <Route 
+        path="/admin" 
+        element={
+          <ProtectedRoute>
+            <Admin />
+          </ProtectedRoute>
+        } 
+      />
+      
       {/* Protected Routes */}
       <Route 
         element={
@@ -80,13 +91,14 @@ function AppRoutes() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/ruchers" element={<Ruchers />} />
         <Route path="/ruches" element={<Ruches />} />
-        <Route path="/recoltes" element={<Recoltes />} />
-        <Route path="/sanitaire" element={<Sanitaire />} />
-        <Route path="/stocks" element={<Stocks />} />
-        <Route path="/calendrier" element={<Calendrier />} />
-        <Route path="/rapports" element={<Rapports />} />
-        <Route path="/settings" element={<Settings />} />
-        <Route path="/notifications" element={<Dashboard />} />
+        <Route path="/visites" element={<Visites />} />
+        <Route path="/miellerie" element={<Miellerie />} />
+        <Route path="/atelier" element={<Atelier />} />
+        <Route path="/inventaire" element={<Inventaire />} />
+        <Route path="/parrainage" element={<Parrainage />} />
+        <Route path="/parametres" element={<Settings />} />
+        <Route path="/rapports" element={<Dashboard />} />
+        <Route path="/evenements" element={<Dashboard />} />
       </Route>
       
       {/* Redirect root to dashboard or login */}
