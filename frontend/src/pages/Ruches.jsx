@@ -3,24 +3,21 @@ import {
   Box,
   Plus,
   Search,
-  Filter,
-  MoreVertical,
   Edit,
   Trash2,
   Eye,
   Crown,
-  Calendar,
   Wheat,
-  ChevronDown
+  MoreVertical,
+  X
 } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
+import { Card, CardContent } from '../components/ui/card';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Badge } from '../components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../components/ui/dialog';
 import { Label } from '../components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
-import { mockRuches, mockRuchers } from '../data/mock';
+import { mockRuches as initialRuches, mockRuchers } from '../data/mock';
 
 const getEtatColor = (etat) => {
   switch (etat) {
@@ -31,62 +28,89 @@ const getEtatColor = (etat) => {
   }
 };
 
-const RucheRow = ({ ruche, onEdit, onDelete }) => (
-  <tr className="hover:bg-slate-50 transition-colors group">
-    <td className="px-6 py-4">
-      <div className="flex items-center gap-3">
-        <div className="w-10 h-10 bg-gradient-to-br from-amber-400 to-amber-600 rounded-lg flex items-center justify-center shadow-md">
-          <Box className="w-5 h-5 text-white" />
-        </div>
-        <div>
-          <p className="font-semibold text-slate-800">{ruche.numero}</p>
-          <p className="text-sm text-slate-500">{ruche.type}</p>
-        </div>
-      </div>
-    </td>
-    <td className="px-6 py-4">
-      <p className="text-slate-800">{ruche.rucherName}</p>
-    </td>
-    <td className="px-6 py-4">
-      <Badge className={`${getEtatColor(ruche.etat)} border`}>
-        {ruche.etat}
-      </Badge>
-    </td>
-    <td className="px-6 py-4">
-      <div className="flex items-center gap-2">
-        <Crown className="w-4 h-4 text-amber-500" />
-        <div>
-          <p className="text-sm text-slate-800">{ruche.reine}</p>
-          <p className="text-xs text-slate-500">{ruche.race}</p>
-        </div>
-      </div>
-    </td>
-    <td className="px-6 py-4">
-      <div className="flex items-center gap-2">
-        <Wheat className="w-4 h-4 text-amber-500" />
-        <span className="font-semibold text-slate-800">{ruche.production} kg</span>
-      </div>
-    </td>
-    <td className="px-6 py-4">
-      <p className="text-sm text-slate-600">{new Date(ruche.derniereVisite).toLocaleDateString('fr-FR')}</p>
-    </td>
-    <td className="px-6 py-4">
-      <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-        <button className="p-2 hover:bg-slate-100 rounded-lg transition-colors">
-          <Eye className="w-4 h-4 text-slate-400 hover:text-blue-500" />
-        </button>
-        <button className="p-2 hover:bg-slate-100 rounded-lg transition-colors" onClick={() => onEdit(ruche)}>
-          <Edit className="w-4 h-4 text-slate-400 hover:text-amber-500" />
-        </button>
-        <button className="p-2 hover:bg-red-50 rounded-lg transition-colors" onClick={() => onDelete(ruche.id)}>
-          <Trash2 className="w-4 h-4 text-slate-400 hover:text-red-500" />
-        </button>
-      </div>
-    </td>
-  </tr>
-);
+const RucheRow = ({ ruche, onEdit, onDelete, onView }) => {
+  const [menuOpen, setMenuOpen] = useState(false);
 
-const AddRucheDialog = ({ open, onOpenChange, onAdd }) => {
+  return (
+    <tr className="hover:bg-slate-50 transition-colors group">
+      <td className="px-6 py-4">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 bg-gradient-to-br from-amber-400 to-amber-600 rounded-lg flex items-center justify-center shadow-md">
+            <Box className="w-5 h-5 text-white" />
+          </div>
+          <div>
+            <p className="font-semibold text-slate-800">{ruche.numero}</p>
+            <p className="text-sm text-slate-500">{ruche.type}</p>
+          </div>
+        </div>
+      </td>
+      <td className="px-6 py-4">
+        <p className="text-slate-800">{ruche.rucherName}</p>
+      </td>
+      <td className="px-6 py-4">
+        <Badge className={`${getEtatColor(ruche.etat)} border`}>
+          {ruche.etat}
+        </Badge>
+      </td>
+      <td className="px-6 py-4">
+        <div className="flex items-center gap-2">
+          <Crown className="w-4 h-4 text-amber-500" />
+          <div>
+            <p className="text-sm text-slate-800">{ruche.reine}</p>
+            <p className="text-xs text-slate-500">{ruche.race}</p>
+          </div>
+        </div>
+      </td>
+      <td className="px-6 py-4">
+        <div className="flex items-center gap-2">
+          <Wheat className="w-4 h-4 text-amber-500" />
+          <span className="font-semibold text-slate-800">{ruche.production} kg</span>
+        </div>
+      </td>
+      <td className="px-6 py-4">
+        <p className="text-sm text-slate-600">{new Date(ruche.derniereVisite).toLocaleDateString('fr-FR')}</p>
+      </td>
+      <td className="px-6 py-4">
+        <div className="relative">
+          <button 
+            className="p-2 hover:bg-slate-100 rounded-lg"
+            onClick={() => setMenuOpen(!menuOpen)}
+          >
+            <MoreVertical className="w-4 h-4 text-slate-400" />
+          </button>
+          
+          {menuOpen && (
+            <div className="absolute right-0 top-10 bg-white border border-slate-200 rounded-lg shadow-lg z-10 min-w-[140px]">
+              <button 
+                className="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50"
+                onClick={() => { onView(ruche); setMenuOpen(false); }}
+              >
+                <Eye className="w-4 h-4" />
+                Voir
+              </button>
+              <button 
+                className="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50"
+                onClick={() => { onEdit(ruche); setMenuOpen(false); }}
+              >
+                <Edit className="w-4 h-4" />
+                Modifier
+              </button>
+              <button 
+                className="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50"
+                onClick={() => { onDelete(ruche.id); setMenuOpen(false); }}
+              >
+                <Trash2 className="w-4 h-4" />
+                Supprimer
+              </button>
+            </div>
+          )}
+        </div>
+      </td>
+    </tr>
+  );
+};
+
+const AddRucheDialog = ({ open, onOpenChange, onAdd, editData }) => {
   const [formData, setFormData] = useState({
     numero: '',
     rucherId: '',
@@ -96,16 +120,31 @@ const AddRucheDialog = ({ open, onOpenChange, onAdd }) => {
     reine: 'Non marquée'
   });
 
+  React.useEffect(() => {
+    if (editData) {
+      setFormData({
+        numero: editData.numero,
+        rucherId: editData.rucherId,
+        type: editData.type,
+        etat: editData.etat,
+        race: editData.race,
+        reine: editData.reine
+      });
+    } else {
+      setFormData({ numero: '', rucherId: '', type: 'Dadant', etat: 'Moyen', race: 'Buckfast', reine: 'Non marquée' });
+    }
+  }, [editData]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const rucher = mockRuchers.find(r => r.id === formData.rucherId);
     onAdd({
       ...formData,
       rucherName: rucher?.name || '',
-      production: 0,
-      dateInstallation: new Date().toISOString().split('T')[0],
+      production: editData?.production || 0,
+      dateInstallation: editData?.dateInstallation || new Date().toISOString().split('T')[0],
       derniereVisite: new Date().toISOString().split('T')[0]
-    });
+    }, editData?.id);
     setFormData({ numero: '', rucherId: '', type: 'Dadant', etat: 'Moyen', race: 'Buckfast', reine: 'Non marquée' });
     onOpenChange(false);
   };
@@ -114,12 +153,12 @@ const AddRucheDialog = ({ open, onOpenChange, onAdd }) => {
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-lg">
         <DialogHeader>
-          <DialogTitle className="text-xl font-semibold">Ajouter une Ruche</DialogTitle>
+          <DialogTitle>{editData ? 'Modifier la ruche' : 'Ajouter une Ruche'}</DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4 mt-4">
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <Label className="text-sm font-medium text-slate-700">Numéro</Label>
+              <Label>Numéro</Label>
               <Input
                 value={formData.numero}
                 onChange={(e) => setFormData({ ...formData, numero: e.target.value })}
@@ -129,11 +168,11 @@ const AddRucheDialog = ({ open, onOpenChange, onAdd }) => {
               />
             </div>
             <div>
-              <Label className="text-sm font-medium text-slate-700">Rucher</Label>
+              <Label>Rucher</Label>
               <select 
                 value={formData.rucherId}
                 onChange={(e) => setFormData({ ...formData, rucherId: e.target.value })}
-                className="w-full mt-1.5 px-3 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
+                className="w-full mt-1.5 px-3 py-2 border border-slate-200 rounded-lg"
                 required
               >
                 <option value="">Sélectionner...</option>
@@ -145,11 +184,11 @@ const AddRucheDialog = ({ open, onOpenChange, onAdd }) => {
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <Label className="text-sm font-medium text-slate-700">Type</Label>
+              <Label>Type</Label>
               <select 
                 value={formData.type}
                 onChange={(e) => setFormData({ ...formData, type: e.target.value })}
-                className="w-full mt-1.5 px-3 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
+                className="w-full mt-1.5 px-3 py-2 border border-slate-200 rounded-lg"
               >
                 <option value="Dadant">Dadant</option>
                 <option value="Langstroth">Langstroth</option>
@@ -158,11 +197,11 @@ const AddRucheDialog = ({ open, onOpenChange, onAdd }) => {
               </select>
             </div>
             <div>
-              <Label className="text-sm font-medium text-slate-700">État</Label>
+              <Label>État</Label>
               <select 
                 value={formData.etat}
                 onChange={(e) => setFormData({ ...formData, etat: e.target.value })}
-                className="w-full mt-1.5 px-3 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
+                className="w-full mt-1.5 px-3 py-2 border border-slate-200 rounded-lg"
               >
                 <option value="Fort">Fort</option>
                 <option value="Moyen">Moyen</option>
@@ -172,11 +211,11 @@ const AddRucheDialog = ({ open, onOpenChange, onAdd }) => {
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <Label className="text-sm font-medium text-slate-700">Race</Label>
+              <Label>Race</Label>
               <select 
                 value={formData.race}
                 onChange={(e) => setFormData({ ...formData, race: e.target.value })}
-                className="w-full mt-1.5 px-3 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
+                className="w-full mt-1.5 px-3 py-2 border border-slate-200 rounded-lg"
               >
                 <option value="Buckfast">Buckfast</option>
                 <option value="Carnica">Carnica</option>
@@ -185,7 +224,7 @@ const AddRucheDialog = ({ open, onOpenChange, onAdd }) => {
               </select>
             </div>
             <div>
-              <Label className="text-sm font-medium text-slate-700">Reine</Label>
+              <Label>Reine</Label>
               <Input
                 value={formData.reine}
                 onChange={(e) => setFormData({ ...formData, reine: e.target.value })}
@@ -198,8 +237,8 @@ const AddRucheDialog = ({ open, onOpenChange, onAdd }) => {
             <Button type="button" variant="outline" className="flex-1" onClick={() => onOpenChange(false)}>
               Annuler
             </Button>
-            <Button type="submit" className="flex-1 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-white">
-              Ajouter
+            <Button type="submit" className="flex-1 bg-amber-500 hover:bg-amber-600 text-white">
+              {editData ? 'Enregistrer' : 'Ajouter'}
             </Button>
           </div>
         </form>
@@ -208,10 +247,64 @@ const AddRucheDialog = ({ open, onOpenChange, onAdd }) => {
   );
 };
 
+const ViewRucheDialog = ({ open, onOpenChange, ruche }) => {
+  if (!ruche) return null;
+
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="sm:max-w-lg">
+        <DialogHeader>
+          <DialogTitle className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-gradient-to-br from-amber-400 to-amber-600 rounded-lg flex items-center justify-center">
+              <Box className="w-5 h-5 text-white" />
+            </div>
+            Ruche {ruche.numero}
+          </DialogTitle>
+        </DialogHeader>
+        <div className="space-y-4 mt-4">
+          <div className="grid grid-cols-2 gap-4">
+            <div className="p-4 bg-slate-50 rounded-lg">
+              <p className="text-sm text-slate-500">Rucher</p>
+              <p className="font-semibold text-slate-800">{ruche.rucherName}</p>
+            </div>
+            <div className="p-4 bg-slate-50 rounded-lg">
+              <p className="text-sm text-slate-500">Type</p>
+              <p className="font-semibold text-slate-800">{ruche.type}</p>
+            </div>
+            <div className="p-4 bg-slate-50 rounded-lg">
+              <p className="text-sm text-slate-500">État</p>
+              <Badge className={`${getEtatColor(ruche.etat)} border mt-1`}>{ruche.etat}</Badge>
+            </div>
+            <div className="p-4 bg-slate-50 rounded-lg">
+              <p className="text-sm text-slate-500">Production</p>
+              <p className="font-semibold text-amber-600">{ruche.production} kg</p>
+            </div>
+            <div className="p-4 bg-slate-50 rounded-lg">
+              <p className="text-sm text-slate-500">Reine</p>
+              <p className="font-semibold text-slate-800">{ruche.reine}</p>
+              <p className="text-xs text-slate-500">{ruche.race}</p>
+            </div>
+            <div className="p-4 bg-slate-50 rounded-lg">
+              <p className="text-sm text-slate-500">Dernière visite</p>
+              <p className="font-semibold text-slate-800">{new Date(ruche.derniereVisite).toLocaleDateString('fr-FR')}</p>
+            </div>
+          </div>
+          <Button className="w-full" onClick={() => onOpenChange(false)}>
+            Fermer
+          </Button>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+};
+
 const Ruches = () => {
-  const [ruches, setRuches] = useState(mockRuches);
+  const [ruches, setRuches] = useState(initialRuches);
   const [searchTerm, setSearchTerm] = useState('');
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [viewDialogOpen, setViewDialogOpen] = useState(false);
+  const [selectedRuche, setSelectedRuche] = useState(null);
+  const [editRuche, setEditRuche] = useState(null);
   const [filterEtat, setFilterEtat] = useState('all');
   const [filterRucher, setFilterRucher] = useState('all');
 
@@ -223,16 +316,33 @@ const Ruches = () => {
     return matchesSearch && matchesEtat && matchesRucher;
   });
 
-  const handleAdd = (data) => {
-    const newRuche = {
-      id: String(ruches.length + 1),
-      ...data
-    };
-    setRuches([...ruches, newRuche]);
+  const handleAdd = (data, editId) => {
+    if (editId) {
+      setRuches(ruches.map(r => r.id === editId ? { ...r, ...data } : r));
+    } else {
+      const newRuche = {
+        id: String(Date.now()),
+        ...data
+      };
+      setRuches([...ruches, newRuche]);
+    }
+    setEditRuche(null);
   };
 
   const handleDelete = (id) => {
-    setRuches(ruches.filter(r => r.id !== id));
+    if (window.confirm('Êtes-vous sûr de vouloir supprimer cette ruche ?')) {
+      setRuches(ruches.filter(r => r.id !== id));
+    }
+  };
+
+  const handleView = (ruche) => {
+    setSelectedRuche(ruche);
+    setViewDialogOpen(true);
+  };
+
+  const handleEdit = (ruche) => {
+    setEditRuche(ruche);
+    setDialogOpen(true);
   };
 
   const stats = {
@@ -242,18 +352,18 @@ const Ruches = () => {
   };
 
   return (
-    <div className="p-6 lg:p-8 space-y-6">
+    <div className="p-6 space-y-6">
       {/* Header */}
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+      <div className="flex items-start justify-between">
         <div>
-          <h1 className="text-2xl lg:text-3xl font-bold text-slate-800">Mes Ruches</h1>
-          <p className="text-slate-500 mt-1">{ruches.length} ruches enregistrées</p>
+          <h1 className="text-2xl font-bold text-slate-800">Mes Ruches</h1>
+          <p className="text-slate-500">{ruches.length} ruches enregistrées</p>
         </div>
         <Button 
-          onClick={() => setDialogOpen(true)}
-          className="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-white shadow-lg shadow-amber-500/30"
+          onClick={() => { setEditRuche(null); setDialogOpen(true); }}
+          className="bg-amber-500 hover:bg-amber-600 text-white gap-2"
         >
-          <Plus className="w-5 h-5 mr-2" />
+          <Plus className="w-5 h-5" />
           Nouvelle Ruche
         </Button>
       </div>
@@ -266,9 +376,7 @@ const Ruches = () => {
               <p className="text-sm text-slate-500">État Fort</p>
               <p className="text-2xl font-bold text-emerald-600">{stats.fort}</p>
             </div>
-            <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center">
-              <Box className="w-6 h-6 text-emerald-600" />
-            </div>
+            <Box className="w-8 h-8 text-emerald-200" />
           </CardContent>
         </Card>
         <Card className="border-0 shadow-md border-l-4 border-l-amber-500">
@@ -277,9 +385,7 @@ const Ruches = () => {
               <p className="text-sm text-slate-500">État Moyen</p>
               <p className="text-2xl font-bold text-amber-600">{stats.moyen}</p>
             </div>
-            <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center">
-              <Box className="w-6 h-6 text-amber-600" />
-            </div>
+            <Box className="w-8 h-8 text-amber-200" />
           </CardContent>
         </Card>
         <Card className="border-0 shadow-md border-l-4 border-l-red-500">
@@ -288,9 +394,7 @@ const Ruches = () => {
               <p className="text-sm text-slate-500">État Faible</p>
               <p className="text-2xl font-bold text-red-600">{stats.faible}</p>
             </div>
-            <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
-              <Box className="w-6 h-6 text-red-600" />
-            </div>
+            <Box className="w-8 h-8 text-red-200" />
           </CardContent>
         </Card>
       </div>
@@ -311,7 +415,7 @@ const Ruches = () => {
             <select 
               value={filterRucher}
               onChange={(e) => setFilterRucher(e.target.value)}
-              className="px-4 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
+              className="px-4 py-2 border border-slate-200 rounded-lg text-sm"
             >
               <option value="all">Tous les ruchers</option>
               {mockRuchers.map(r => (
@@ -343,18 +447,24 @@ const Ruches = () => {
           <table className="w-full">
             <thead className="bg-slate-50">
               <tr>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Ruche</th>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Rucher</th>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">État</th>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Reine</th>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Production</th>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Dernière visite</th>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Actions</th>
+                <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase">Ruche</th>
+                <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase">Rucher</th>
+                <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase">État</th>
+                <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase">Reine</th>
+                <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase">Production</th>
+                <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase">Dernière visite</th>
+                <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">
               {filteredRuches.map((ruche) => (
-                <RucheRow key={ruche.id} ruche={ruche} onEdit={() => {}} onDelete={handleDelete} />
+                <RucheRow 
+                  key={ruche.id} 
+                  ruche={ruche} 
+                  onEdit={handleEdit} 
+                  onDelete={handleDelete}
+                  onView={handleView}
+                />
               ))}
             </tbody>
           </table>
@@ -367,7 +477,17 @@ const Ruches = () => {
         )}
       </Card>
 
-      <AddRucheDialog open={dialogOpen} onOpenChange={setDialogOpen} onAdd={handleAdd} />
+      <AddRucheDialog 
+        open={dialogOpen} 
+        onOpenChange={setDialogOpen} 
+        onAdd={handleAdd}
+        editData={editRuche}
+      />
+      <ViewRucheDialog
+        open={viewDialogOpen}
+        onOpenChange={setViewDialogOpen}
+        ruche={selectedRuche}
+      />
     </div>
   );
 };
