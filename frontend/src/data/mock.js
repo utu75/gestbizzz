@@ -12,10 +12,12 @@ export const mockUser = {
 };
 
 export const mockRuchers = [
-  { id: '1', name: 'Rucher Principal', location: 'Saint-Martin', lat: 48.8566, lng: 2.3522, ruchesCount: 12, status: 'actif', dateCreation: '2022-03-15' },
-  { id: '2', name: 'Rucher de la Vallée', location: 'Fontainebleau', lat: 48.4047, lng: 2.7013, ruchesCount: 8, status: 'actif', dateCreation: '2023-01-20' },
-  { id: '3', name: 'Rucher du Lac', location: 'Melun', lat: 48.5421, lng: 2.6557, ruchesCount: 15, status: 'actif', dateCreation: '2021-06-10' },
-  { id: '4', name: 'Rucher Bio', location: 'Provins', lat: 48.5607, lng: 3.2994, ruchesCount: 6, status: 'inactif', dateCreation: '2020-09-05' }
+  { id: '1', name: 'H1', location: 'Hatiheu (Poihapapu)', lat: 48.8566, lng: 2.3522, ruchesCount: 0, status: 'actif', dateCreation: '2025-12-15' },
+  { id: '2', name: 'H2', location: 'Hatiheu (Otto)', lat: 48.4047, lng: 2.7013, ruchesCount: 2, status: 'actif', dateCreation: '2025-12-10' },
+  { id: '3', name: 'House', location: 'Taiohae (Rod et Mélina)', lat: 48.5421, lng: 2.6557, ruchesCount: 0, status: 'actif', dateCreation: '2025-11-20' },
+  { id: '4', name: 'T1', location: 'Taipivai (HEIANI)', lat: 48.5607, lng: 3.2994, ruchesCount: 0, status: 'actif', dateCreation: '2025-10-05' },
+  { id: '5', name: 'T2', location: 'Taipivai (Boiteu)', lat: 48.5607, lng: 3.2994, ruchesCount: 0, status: 'actif', dateCreation: '2025-09-15' },
+  { id: '6', name: 'VAIHI', location: 'Baie du contrôleur', lat: 48.5607, lng: 3.2994, ruchesCount: 0, status: 'actif', dateCreation: '2025-08-01' }
 ];
 
 export const mockRuches = [
