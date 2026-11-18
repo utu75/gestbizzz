@@ -37,6 +37,12 @@ Le dépôt contient un prototype fonctionnel d'interface, utile comme inventaire
 - aucune facturation réelle, quota ou contrôle d'offre côté serveur ;
 - aucune gestion de médias, QR, IoT ou voix.
 
+### Dette de dépendances
+
+L'installation historique Create React App remonte 82 vulnérabilités connues, dont 73 classées élevées par npm. Elles proviennent majoritairement de la chaîne `react-scripts`, Jest, Workbox et du serveur de développement. Le prototype ne doit pas être exposé sur Internet. Une correction forcée casserait le socle ; la réponse retenue est la migration contrôlée vers la nouvelle application Web, avec verrouillage et scan des dépendances dans la CI.
+
+Le paquet direct Zod doit également être migré vers une version corrigée lors du remplacement du socle. Aucun `npm audit fix --force` n'a été exécuté.
+
 ## Décision d'architecture
 
 1. Conserver le prototype sur la branche historique.
