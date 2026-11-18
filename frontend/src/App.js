@@ -15,6 +15,8 @@ import Inventaire from "./pages/Inventaire";
 import Parrainage from "./pages/Parrainage";
 import Settings from "./pages/Settings";
 import Admin from "./pages/Admin";
+import Onboarding from "./pages/Onboarding";
+import Plans from "./pages/Plans";
 
 // Layout
 import MainLayout from "./components/Layout/MainLayout";
@@ -69,6 +71,7 @@ function AppRoutes() {
           </PublicRoute>
         } 
       />
+      <Route path="/inscription" element={<Onboarding />} />
       
       {/* Admin Route - Special Layout */}
       <Route 
@@ -97,6 +100,7 @@ function AppRoutes() {
         <Route path="/inventaire" element={<Inventaire />} />
         <Route path="/parrainage" element={<Parrainage />} />
         <Route path="/parametres" element={<Settings />} />
+        <Route path="/offres" element={<Plans />} />
         <Route path="/rapports" element={<Dashboard />} />
         <Route path="/evenements" element={<Dashboard />} />
       </Route>

@@ -60,6 +60,7 @@ const Login = () => {
 
           <div className="my-6 flex items-center gap-3 text-xs text-slate-400"><span className="h-px flex-1 bg-slate-200"/>PRÉVISUALISATION<span className="h-px flex-1 bg-slate-200"/></div>
           <button onClick={openPilot} className="flex h-12 w-full items-center justify-center gap-2 rounded-lg border border-[#173426] bg-white font-bold text-[#173426] transition hover:bg-[#edf3ef]"><Smartphone className="h-4 w-4"/>Explorer le pilote Haïti Mélina</button>
+          <p className="mt-5 text-center text-sm text-slate-500">Nouvelle exploitation ? <button onClick={()=>navigate('/inscription')} className="font-black text-[#8d610d]">Créer un compte</button></p>
           <div className="mt-6 flex items-start gap-3 rounded-xl bg-white p-4 text-xs leading-relaxed text-slate-500 shadow-sm"><ShieldCheck className="mt-0.5 h-5 w-5 shrink-0 text-emerald-700"/><p>La connexion réelle et la 2FA seront reliées à l’API sécurisée. Le pilote ne contient aucun identifiant ou mot de passe public.</p></div>
         </div>
       </section>

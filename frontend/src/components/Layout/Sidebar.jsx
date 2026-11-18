@@ -1,13 +1,13 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { CalendarDays, ChevronRight, Droplets, Hexagon, LayoutDashboard, LogOut, MapPin, Package, Settings, Sparkles, Warehouse } from 'lucide-react';
+import { CalendarDays, ChevronRight, CreditCard, Droplets, Hexagon, LayoutDashboard, LogOut, MapPin, Package, Settings, Sparkles, Warehouse } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 
 const groups = [
   ['Pilotage', [[LayoutDashboard,'Vue d’ensemble','/dashboard'],[CalendarDays,'Visites & tâches','/visites']]],
   ['Cheptel', [[MapPin,'Ruchers','/ruchers'],[Hexagon,'Ruches & colonies','/ruches']]],
   ['Production', [[Droplets,'Miellerie & lots','/miellerie'],[Package,'Matériel','/inventaire'],[Warehouse,'Atelier','/atelier']]],
-  ['Administration', [[Sparkles,'Rapports','/rapports'],[Settings,'Paramètres','/parametres']]],
+  ['Administration', [[Sparkles,'Rapports','/rapports'],[CreditCard,'Offre & facturation','/offres'],[Settings,'Paramètres','/parametres']]],
 ];
 
 const Sidebar = () => {
