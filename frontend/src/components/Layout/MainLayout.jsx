@@ -1,52 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
+import { Bell, Hexagon, Search } from 'lucide-react';
 import Sidebar from './Sidebar';
 import { useAuth } from '../../contexts/AuthContext';
-import { Menu } from 'lucide-react';
 
-const MainLayout = () => {
-  const { user } = useAuth();
-  const location = useLocation();
-
-  const getPageTitle = () => {
-    const titles = {
-      '/dashboard': 'Tableau de bord',
-      '/ruchers': 'Ruchers',
-      '/ruches': 'Ruches',
-      '/visites': 'Visites',
-      '/miellerie': 'Miellerie',
-      '/atelier': 'Atelier',
-      '/inventaire': 'Inventaire',
-      '/parrainage': 'Parrainage',
-      '/parametres': 'Paramètres',
-      '/admin': 'Administration'
-    };
-    return titles[location.pathname] || 'Dashboard';
-  };
-
-  if (!user) return null;
-
-  return (
-    <div className="min-h-screen bg-slate-50">
-      <Sidebar />
-      
-      {/* Top Header */}
-      <header className="fixed top-0 left-56 right-0 h-14 bg-white border-b border-slate-200 flex items-center justify-between px-6 z-40">
-        <div className="flex items-center gap-3">
-          <Menu className="w-5 h-5 text-slate-400" />
-          <h1 className="font-semibold text-slate-800">{getPageTitle()}</h1>
-        </div>
-        <div className="flex items-center gap-4">
-          <span className="text-sm text-slate-500">{user?.exploitation || 'Mon Exploitation'}</span>
-          <span className="text-sm text-slate-400">Déconnexion</span>
-        </div>
-      </header>
-      
-      <main className="ml-56 pt-14 min-h-screen transition-all duration-300">
-        <Outlet />
-      </main>
-    </div>
-  );
-};
-
+const titles={dashboard:'Vue d’ensemble',ruchers:'Ruchers',ruches:'Ruches & colonies',visites:'Visites & tâches',calendrier:'Calendrier',sanitaire:'Registre sanitaire',recoltes:'Récoltes',miellerie:'Miellerie & lots',atelier:'Atelier',inventaire:'Matériel',parametres:'Paramètres',rapports:'Rapports',offres:'Offre & facturation'};
+const MainLayout=()=>{const {user}=useAuth();const [menuOpen,setMenuOpen]=useState(false);const location=useLocation();const key=location.pathname.split('/')[1]||'dashboard';if(!user)return null;return <div className="min-h-screen bg-[#f4f6f4]"><Sidebar/>{menuOpen&&<><button aria-label="Fermer le menu" onClick={()=>setMenuOpen(false)} className="fixed inset-0 z-40 bg-black/40 lg:hidden"/><Sidebar mobile onClose={()=>setMenuOpen(false)}/></>}<header className="fixed left-0 right-0 top-0 z-30 flex h-16 items-center justify-between border-b border-slate-200 bg-white px-4 lg:left-64 lg:px-7"><div className="flex items-center gap-3"><button aria-label="Ouvrir le menu" onClick={()=>setMenuOpen(true)} className="grid h-9 w-9 place-items-center rounded-lg bg-[#173426] text-[#e4ad3e] lg:hidden"><Hexagon className="h-4 w-4"/></button><div><p className="text-xs text-slate-400">HKBEES / Exploitation</p><h1 className="text-sm font-extrabold text-slate-800">{titles[key]||'HKBEES'}</h1></div></div><div className="flex items-center gap-2"><button className="hidden h-9 items-center gap-2 rounded-lg border border-slate-200 px-3 text-xs text-slate-500 sm:flex"><Search className="h-4 w-4"/>Rechercher</button><button aria-label="Notifications" className="relative grid h-9 w-9 place-items-center rounded-lg border border-slate-200 bg-white"><Bell className="h-4 w-4"/><span className="absolute right-2 top-2 h-1.5 w-1.5 rounded-full bg-amber-500"/></button><div className="ml-1 grid h-9 w-9 place-items-center rounded-full bg-[#dce8e1] text-xs font-black text-[#173426]">{user.avatar}</div></div></header><main className="min-h-screen pt-16 lg:ml-64"><Outlet/></main></div>};
 export default MainLayout;

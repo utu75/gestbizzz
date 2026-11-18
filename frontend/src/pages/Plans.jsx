@@ -1,0 +1,155 @@
+import React from "react";
+import {
+  Check,
+  Cpu,
+  Hexagon,
+  ShieldCheck,
+  Sparkles,
+  Users,
+} from "lucide-react";
+
+const plans = [
+  {
+    name: "Débutant",
+    range: "Jusqu’à 10 ruches",
+    price: "10 $",
+    period: "/ an",
+    desc: "Pour démarrer un registre fiable.",
+    features: [
+      "1 utilisateur",
+      "2 ruchers",
+      "Registre & QR",
+      "Mode hors connexion",
+    ],
+    tone: "border-slate-200",
+  },
+  {
+    name: "Pro",
+    range: "11 à 399 ruches",
+    price: "12,90 $",
+    period: "/ mois",
+    desc: "Pour vendre, produire et collaborer.",
+    features: [
+      "3 utilisateurs",
+      "300 crédits IA",
+      "Visites vocales",
+      "Traçabilité du miel",
+    ],
+    tone: "border-[#d5a443] ring-2 ring-[#e8bd67]/20",
+    featured: true,
+  },
+  {
+    name: "Exploitation",
+    range: "400 à 999 ruches",
+    price: "79 $",
+    period: "/ mois",
+    desc: "Pour les équipes et le matériel connecté.",
+    features: [
+      "10 utilisateurs",
+      "1 500 crédits IA",
+      "250 appareils IoT",
+      "API & support prioritaire",
+    ],
+    tone: "border-slate-200",
+  },
+  {
+    name: "Entreprise",
+    range: "1 000+ ruches",
+    price: "Sur devis",
+    period: "",
+    desc: "Pour coopératives et organisations.",
+    features: [
+      "Utilisateurs adaptés",
+      "Multi-exploitations",
+      "SSO & API",
+      "Accompagnement dédié",
+    ],
+    tone: "border-slate-200",
+  },
+];
+
+export default function Plans() {
+  return (
+    <div className="mx-auto max-w-[1500px] p-4 sm:p-6 lg:p-7">
+      <section className="flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <p className="text-xs font-black uppercase tracking-[.18em] text-[#9a6a0a]">
+            Abonnement HK Group
+          </p>
+          <h2 className="mt-2 text-3xl font-black tracking-tight">
+            Une offre adaptée à chaque exploitation
+          </h2>
+          <p className="mt-2 max-w-2xl text-sm text-slate-500">
+            Les droits sont contrôlés par l’API. Vous conservez vos données en
+            cas de changement d’offre.
+          </p>
+        </div>
+        <div className="rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-2 text-xs font-bold text-emerald-800">
+          Démonstration Pro · Aucun paiement réel
+        </div>
+      </section>
+      <section className="mt-7 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        {plans.map((p) => (
+          <article
+            key={p.name}
+            className={`relative flex flex-col rounded-2xl border bg-white p-5 shadow-sm ${p.tone}`}
+          >
+            {p.featured && (
+              <span className="absolute -top-3 left-5 rounded-full bg-[#173426] px-3 py-1 text-[10px] font-black uppercase tracking-wide text-white">
+                Recommandée
+              </span>
+            )}
+            <p className="text-sm font-black text-[#173426]">{p.name}</p>
+            <p className="mt-1 text-xs text-slate-400">{p.range}</p>
+            <div className="mt-5 flex items-end gap-1">
+              <span className="text-3xl font-black">{p.price}</span>
+              <span className="pb-1 text-xs text-slate-400">{p.period}</span>
+            </div>
+            <p className="mt-3 min-h-[40px] text-xs leading-relaxed text-slate-500">
+              {p.desc}
+            </p>
+            <div className="my-5 h-px bg-slate-100" />
+            <ul className="flex-1 space-y-3">
+              {p.features.map((f) => (
+                <li
+                  key={f}
+                  className="flex gap-2 text-xs font-medium text-slate-600"
+                >
+                  <Check className="h-4 w-4 shrink-0 text-emerald-700" />
+                  {f}
+                </li>
+              ))}
+            </ul>
+            <button
+              className={`mt-6 h-10 rounded-lg text-xs font-black ${p.featured ? "bg-[#173426] text-white" : "border border-slate-300 bg-white text-slate-700"}`}
+            >
+              {p.name === "Pro" ? "Offre de démonstration" : "Choisir cette offre"}
+            </button>
+          </article>
+        ))}
+      </section>
+      <section className="mt-6 grid gap-3 sm:grid-cols-3">
+        {[
+          [ShieldCheck, "Paiement sécurisé", "Facturation portée par HK Group"],
+          [Cpu, "Crédits maîtrisés", "Plafonds et alertes avant consommation"],
+          [
+            Users,
+            "Évolution sans rupture",
+            "Changez d’offre en conservant l’historique",
+          ],
+        ].map(([Icon, t, d]) => (
+          <div
+            key={t}
+            className="flex gap-3 rounded-xl border border-slate-200 bg-white p-4"
+          >
+            <Icon className="h-5 w-5 text-[#a26e0e]" />
+            <div>
+              <p className="text-sm font-black">{t}</p>
+              <p className="mt-1 text-xs text-slate-400">{d}</p>
+            </div>
+          </div>
+        ))}
+      </section>
+    </div>
+  );
+}

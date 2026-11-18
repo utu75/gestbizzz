@@ -1,100 +1,61 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
 
 const AuthContext = createContext(null);
+const STORAGE_KEY = 'hkbees_demo_session';
 
-const mockUsers = [
-  {
-    id: '1',
-    name: 'Mon Exploitation',
-    email: 'melimiel08@gmail.com',
-    role: 'Apiculteur',
-    avatar: 'ME',
-    exploitation: 'Rucher du Soleil',
-    isAdmin: false
-  },
-  {
-    id: '2',
-    name: 'Administrateur',
-    email: 'admin@gestbizz.com',
-    role: 'Admin',
-    avatar: 'AD',
-    exploitation: 'GESTBIZZ Admin',
-    isAdmin: true
-  }
-];
+const previewUser = {
+  id: 'hkbees-preview',
+  name: 'Équipe apicole',
+  email: 'demo@hkbees.local',
+  role: 'Propriétaire',
+  avatar: 'HM',
+  exploitation: 'Exploitation de démonstration',
+  plan: 'pro',
+  isAdmin: false,
+  twoFactorEnabled: false,
+};
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem('gestbizz_user');
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
+    try {
+      const stored = sessionStorage.getItem(STORAGE_KEY);
+      if (stored) setUser(JSON.parse(stored));
+    } catch {
+      sessionStorage.removeItem(STORAGE_KEY);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   }, []);
 
-  const login = async (email, password) => {
-    // Check for admin
-    if (email === 'admin@gestbizz.com' && password === 'admin123') {
-      const adminUser = mockUsers.find(u => u.email === 'admin@gestbizz.com');
-      localStorage.setItem('gestbizz_user', JSON.stringify(adminUser));
-      setUser(adminUser);
-      return { success: true };
-    }
-    
-    // Check for regular users
-    if (email && password) {
-      const existingUser = mockUsers.find(u => u.email === email);
-      const userData = existingUser || {
-        id: Date.now().toString(),
-        name: email.split('@')[0],
-        email,
-        role: 'Apiculteur',
-        avatar: email.substring(0, 2).toUpperCase(),
-        exploitation: 'Mon Exploitation',
-        isAdmin: false
-      };
-      localStorage.setItem('gestbizz_user', JSON.stringify(userData));
-      setUser(userData);
-      return { success: true };
-    }
-    return { success: false, error: 'Email ou mot de passe incorrect' };
-  };
+  const login = async () => ({
+    success: false,
+    error: "L'authentification sécurisée sera connectée à l'API HKBEES. Utilisez la démonstration pour la prévisualisation.",
+  });
 
-  const loginWithGoogle = async () => {
-    // Simulate Google login - creates a default user
-    const googleUser = {
-      id: 'google_' + Date.now(),
-      name: 'Utilisateur Google',
-      email: 'user@gmail.com',
-      role: 'Apiculteur',
-      avatar: 'UG',
-      exploitation: 'Mon Exploitation',
-      isAdmin: false
-    };
-    localStorage.setItem('gestbizz_user', JSON.stringify(googleUser));
-    setUser(googleUser);
+  const enterPreview = async () => {
+    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(previewUser));
+    setUser(previewUser);
     return { success: true };
   };
 
   const logout = () => {
-    localStorage.removeItem('gestbizz_user');
+    sessionStorage.removeItem(STORAGE_KEY);
     setUser(null);
   };
 
-  return (
-    <AuthContext.Provider value={{ user, login, loginWithGoogle, logout, loading }}>
-      {children}
-    </AuthContext.Provider>
+  const value = useMemo(
+    () => ({ user, login, enterPreview, logout, loading }),
+    [user, loading]
   );
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
+  if (!context) throw new Error('useAuth must be used within AuthProvider');
   return context;
 };

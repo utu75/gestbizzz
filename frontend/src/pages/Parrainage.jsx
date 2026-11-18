@@ -12,8 +12,8 @@ import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 
 const Parrainage = () => {
-  const referralCode = 'GESTBIZZ-MEL2025';
-  const referralLink = `https://gestbizz.com/ref/${referralCode}`;
+  const referralCode = 'HKBEES-DEMO26';
+  const referralLink = `${window.location.origin}/ref/${referralCode}`;
 
   const copyToClipboard = (text) => {
     navigator.clipboard.writeText(text);
@@ -24,7 +24,7 @@ const Parrainage = () => {
       {/* Header */}
       <div>
         <h1 className="text-2xl font-bold text-slate-800">Parrainage</h1>
-        <p className="text-slate-500">Partagez GESTBIZZ et gagnez des avantages</p>
+        <p className="text-slate-500">Partagez HKBEES et gagnez des avantages</p>
       </div>
 
       {/* Stats */}

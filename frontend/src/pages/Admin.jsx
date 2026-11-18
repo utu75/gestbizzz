@@ -70,7 +70,7 @@ const AdminSidebar = ({ activeTab, setActiveTab }) => {
 
       <div className="absolute bottom-4 left-4 text-xs text-slate-500">
         <p>Version 1.0.0</p>
-        <p>© 2025 GESTBIZZ</p>
+        <p>© 2026 HKBEES</p>
       </div>
     </aside>
   );
@@ -156,8 +156,8 @@ const Admin = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('dashboard');
   const [users, setUsers] = useState([
-    { id: '1', name: 'Mon Exploitation', email: 'melimiel08@gmail.com', type: 'VIP', date: '18/12/2025' },
-    { id: '2', name: 'test', email: 'h.rod@live.fr', type: 'DEMO', date: '18/12/2025' }
+    { id: '1', name: 'Exploitation Démo', email: 'pro@hkbees.local', type: 'PRO', date: '18/11/2026' },
+    { id: '2', name: 'Compte découverte', email: 'demo@hkbees.local', type: 'DEMO', date: '18/11/2026' }
   ]);
 
   const handleChangeType = (userId, newType) => {

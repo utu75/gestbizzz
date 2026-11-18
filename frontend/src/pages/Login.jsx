@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Hexagon, Mail, Lock, Eye, EyeOff, Loader2, Shield } from 'lucide-react';
+import { ArrowRight, Check, Eye, EyeOff, Hexagon, Lock, Mail, ShieldCheck, Smartphone } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
-import { Button } from '../components/ui/button';
-import { Input } from '../components/ui/input';
-import { Label } from '../components/ui/label';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -12,198 +9,62 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const { login, loginWithGoogle } = useAuth();
+  const { login, enterPreview } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError('');
-    setLoading(true);
-
-    try {
-      const result = await login(email, password);
-      if (result.success) {
-        navigate('/dashboard');
-      } else {
-        setError(result.error);
-      }
-    } catch (err) {
-      setError('Une erreur est survenue');
-    } finally {
-      setLoading(false);
-    }
+  const submit = async (event) => {
+    event.preventDefault(); setLoading(true); setError('');
+    const result = await login(email, password);
+    setLoading(false);
+    if (result.success) navigate('/dashboard'); else setError(result.error);
   };
 
-  const handleGoogleLogin = async () => {
-    setError('');
-    setLoading(true);
-    try {
-      const result = await loginWithGoogle();
-      if (result.success) {
-        navigate('/dashboard');
-      } else {
-        setError(result.error);
-      }
-    } catch (err) {
-      setError('Erreur de connexion Google');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleAdminLogin = () => {
-    setEmail('admin@gestbizz.com');
-    setPassword('admin123');
+  const openPreview = async () => {
+    setLoading(true); await enterPreview(); navigate('/dashboard');
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center p-4">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-amber-600/10 rounded-full blur-3xl" />
-        <svg className="absolute inset-0 w-full h-full opacity-5" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <pattern id="hexagons" width="50" height="43.4" patternUnits="userSpaceOnUse" patternTransform="scale(2)">
-              <polygon points="25,0 50,14.4 50,43.4 25,57.7 0,43.4 0,14.4" fill="none" stroke="#fbbf24" strokeWidth="0.5"/>
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#hexagons)"/>
-        </svg>
-      </div>
-
-      <div className="relative w-full max-w-md">
-        {/* Logo */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-amber-400 to-amber-600 rounded-2xl shadow-2xl shadow-amber-500/30 mb-4">
-            <Hexagon className="w-10 h-10 text-white" />
-          </div>
-          <h1 className="text-3xl font-bold text-white mb-1">GESTBIZZ</h1>
-          <p className="text-slate-400">Gestion Registre Apicole</p>
+    <main className="min-h-screen bg-[#f3f5f3] text-[#16231d] lg:grid lg:grid-cols-[1.08fr_.92fr]">
+      <section className="relative hidden overflow-hidden bg-[#11261c] px-14 py-12 text-white lg:flex lg:flex-col lg:justify-between">
+        <div className="absolute -right-24 top-28 h-80 w-80 rounded-full border border-[#e6b34a]/20" />
+        <div className="absolute -right-8 top-44 h-52 w-52 rounded-full border border-[#e6b34a]/20" />
+        <div className="relative flex items-center gap-3">
+          <div className="grid h-11 w-11 place-items-center rounded-xl bg-[#e5ae3c] text-[#12241b]"><Hexagon /></div>
+          <div><p className="text-xl font-black tracking-tight">HKBEES</p><p className="text-xs text-[#94a69d]">Un projet développé par HK Group</p></div>
         </div>
-
-        {/* Login Card */}
-        <div className="bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 p-8 shadow-2xl">
-          <h2 className="text-xl font-semibold text-white mb-6">Connexion</h2>
-
-          {/* Google Login */}
-          <Button
-            type="button"
-            variant="outline"
-            onClick={handleGoogleLogin}
-            disabled={loading}
-            className="w-full h-12 bg-white text-slate-800 border-0 hover:bg-slate-100 font-medium mb-4"
-          >
-            <svg className="w-5 h-5 mr-3" viewBox="0 0 24 24">
-              <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-              <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-              <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-              <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-            </svg>
-            Connexion avec Google
-          </Button>
-
-          {/* Admin Quick Login */}
-          <Button
-            type="button"
-            variant="outline"
-            onClick={handleAdminLogin}
-            className="w-full h-10 bg-slate-800/50 text-slate-300 border-slate-600 hover:bg-slate-700 font-medium mb-6 text-sm"
-          >
-            <Shield className="w-4 h-4 mr-2" />
-            Connexion Admin (Demo)
-          </Button>
-
-          <div className="relative mb-6">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-white/20" />
-            </div>
-            <div className="relative flex justify-center text-sm">
-              <span className="px-4 bg-transparent text-slate-400">ou</span>
-            </div>
+        <div className="relative max-w-xl">
+          <p className="mb-4 text-xs font-bold uppercase tracking-[.24em] text-[#e5ae3c]">Bee farm operating system</p>
+          <h1 className="text-5xl font-black leading-[1.08] tracking-tight">Pilotez vos colonies, du rucher au pot de miel.</h1>
+          <p className="mt-6 max-w-lg text-lg leading-relaxed text-[#bfd0c7]">Registre terrain, visites vocales, traçabilité, équipes et équipements connectés dans une plateforme conçue pour travailler même hors réseau.</p>
+          <div className="mt-8 grid gap-3 text-sm text-[#dce5e0] sm:grid-cols-2">
+            {['Application hors connexion','QR par ruche','Traçabilité des lots','Sécurité et 2FA'].map(item=><div key={item} className="flex items-center gap-2"><Check className="h-4 w-4 text-[#e5ae3c]"/>{item}</div>)}
           </div>
+        </div>
+        <p className="relative text-xs text-[#768c80]">Conçu pour les apiculteurs indépendants et les exploitations professionnelles</p>
+      </section>
 
-          <form onSubmit={handleSubmit} className="space-y-5">
-            <div>
-              <Label className="text-slate-300 text-sm font-medium mb-2 block">Email professionnel</Label>
-              <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
-                <Input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="nom@entreprise.com"
-                  className="pl-11 h-12 bg-white/10 border-white/20 text-white placeholder:text-slate-500 focus:border-amber-400 focus:ring-amber-400/20"
-                  required
-                />
-              </div>
-            </div>
+      <section className="flex min-h-screen items-center justify-center px-5 py-10 sm:px-10">
+        <div className="w-full max-w-md">
+          <div className="mb-8 flex items-center gap-3 lg:hidden"><div className="grid h-10 w-10 place-items-center rounded-xl bg-[#173426] text-[#e5ae3c]"><Hexagon className="h-5 w-5"/></div><div><p className="font-black">HKBEES</p><p className="text-xs text-slate-500">Un projet développé par HK Group</p></div></div>
+          <p className="text-xs font-bold uppercase tracking-[.18em] text-[#9a6a0a]">Espace sécurisé</p>
+          <h2 className="mt-2 text-3xl font-black tracking-tight">Accéder à votre exploitation</h2>
+          <p className="mt-2 text-sm leading-relaxed text-slate-500">Connectez-vous pour retrouver vos ruchers, tâches et alertes terrain.</p>
 
-            <div>
-              <Label className="text-slate-300 text-sm font-medium mb-2 block">Mot de passe</Label>
-              <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
-                <Input
-                  type={showPassword ? 'text' : 'password'}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="••••••••"
-                  className="pl-11 pr-11 h-12 bg-white/10 border-white/20 text-white placeholder:text-slate-500 focus:border-amber-400 focus:ring-amber-400/20"
-                  required
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white transition-colors"
-                >
-                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-                </button>
-              </div>
-            </div>
-
-            <div className="flex items-center justify-between">
-              <button type="button" className="text-sm text-amber-400 hover:text-amber-300 transition-colors">
-                Mot de passe oublié ?
-              </button>
-            </div>
-
-            {error && (
-              <div className="p-3 bg-red-500/20 border border-red-500/30 rounded-lg text-red-300 text-sm">
-                {error}
-              </div>
-            )}
-
-            <Button
-              type="submit"
-              disabled={loading}
-              className="w-full h-12 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-white font-semibold shadow-lg shadow-amber-500/30 border-0"
-            >
-              {loading ? (
-                <Loader2 className="w-5 h-5 animate-spin" />
-              ) : (
-                'Se connecter'
-              )}
-            </Button>
+          <form onSubmit={submit} className="mt-8 space-y-5">
+            <label className="block"><span className="mb-2 block text-sm font-bold">Adresse email</span><div className="relative"><Mail className="absolute left-3 top-3.5 h-4 w-4 text-slate-400"/><input aria-label="Adresse email" type="email" value={email} onChange={e=>setEmail(e.target.value)} className="h-11 w-full rounded-lg border border-slate-300 bg-white pl-10 pr-3 outline-none focus:border-[#b57a12] focus:ring-2 focus:ring-[#e8bc64]/30" placeholder="vous@exploitation.com" required/></div></label>
+            <label className="block"><span className="mb-2 block text-sm font-bold">Mot de passe</span><div className="relative"><Lock className="absolute left-3 top-3.5 h-4 w-4 text-slate-400"/><input aria-label="Mot de passe" type={showPassword?'text':'password'} value={password} onChange={e=>setPassword(e.target.value)} className="h-11 w-full rounded-lg border border-slate-300 bg-white pl-10 pr-10 outline-none focus:border-[#b57a12] focus:ring-2 focus:ring-[#e8bc64]/30" placeholder="Votre mot de passe" required/><button type="button" aria-label="Afficher le mot de passe" onClick={()=>setShowPassword(!showPassword)} className="absolute right-3 top-3 text-slate-400">{showPassword?<EyeOff className="h-5 w-5"/>:<Eye className="h-5 w-5"/>}</button></div></label>
+            <div className="flex items-center justify-between text-sm"><label className="flex items-center gap-2 text-slate-600"><input type="checkbox"/> Se souvenir de moi</label><button type="button" className="font-bold text-[#8d610d]">Mot de passe oublié ?</button></div>
+            {error&&<p role="alert" className="rounded-lg border border-amber-200 bg-amber-50 p-3 text-sm text-amber-900">{error}</p>}
+            <button disabled={loading} className="flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-[#173426] font-bold text-white transition hover:bg-[#214b37]">Se connecter <ArrowRight className="h-4 w-4"/></button>
           </form>
 
-          <p className="mt-6 text-center text-slate-400 text-sm">
-            Pas encore de compte ?{' '}
-            <button className="text-amber-400 hover:text-amber-300 font-medium transition-colors">
-              Créer un compte
-            </button>
-          </p>
+          <div className="my-6 flex items-center gap-3 text-xs text-slate-400"><span className="h-px flex-1 bg-slate-200"/>PRÉVISUALISATION<span className="h-px flex-1 bg-slate-200"/></div>
+          <button onClick={openPreview} className="flex h-12 w-full items-center justify-center gap-2 rounded-lg border border-[#173426] bg-white font-bold text-[#173426] transition hover:bg-[#edf3ef]"><Smartphone className="h-4 w-4"/>Explorer la démonstration HKBEES</button>
+          <p className="mt-5 text-center text-sm text-slate-500">Nouvelle exploitation ? <button onClick={()=>navigate('/inscription')} className="font-black text-[#8d610d]">Créer un compte</button></p>
+          <div className="mt-6 flex items-start gap-3 rounded-xl bg-white p-4 text-xs leading-relaxed text-slate-500 shadow-sm"><ShieldCheck className="mt-0.5 h-5 w-5 shrink-0 text-emerald-700"/><p>La connexion réelle et la 2FA seront reliées à l’API sécurisée. La démonstration ne contient aucun identifiant ou mot de passe public.</p></div>
         </div>
-
-        {/* Demo accounts info */}
-        <div className="mt-4 p-4 bg-white/5 rounded-xl border border-white/10">
-          <p className="text-xs text-slate-400 text-center mb-2">Comptes de démonstration:</p>
-          <div className="text-xs text-slate-500 space-y-1">
-            <p><span className="text-amber-400">Admin:</span> admin@gestbizz.com / admin123</p>
-            <p><span className="text-amber-400">User:</span> melimiel08@gmail.com / password</p>
-          </div>
-        </div>
-      </div>
-    </div>
+      </section>
+    </main>
   );
 };
 
