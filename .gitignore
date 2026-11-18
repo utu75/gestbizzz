@@ -85,3 +85,10 @@ android-sdk/ -e
 # Environment files
 *.env
 *.env.*
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+backups/
+uploads/
