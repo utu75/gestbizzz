@@ -17,6 +17,11 @@ import Settings from "./pages/Settings";
 import Admin from "./pages/Admin";
 import Onboarding from "./pages/Onboarding";
 import Plans from "./pages/Plans";
+import Landing from "./pages/Landing";
+import Sanitaire from "./pages/Sanitaire";
+import Recoltes from "./pages/Recoltes";
+import Rapports from "./pages/Rapports";
+import Calendrier from "./pages/Calendrier";
 
 // Layout
 import MainLayout from "./components/Layout/MainLayout";
@@ -63,6 +68,7 @@ function AppRoutes() {
   return (
     <Routes>
       {/* Public Routes */}
+      <Route path="/" element={<Landing />} />
       <Route 
         path="/login" 
         element={
@@ -101,12 +107,13 @@ function AppRoutes() {
         <Route path="/parrainage" element={<Parrainage />} />
         <Route path="/parametres" element={<Settings />} />
         <Route path="/offres" element={<Plans />} />
-        <Route path="/rapports" element={<Dashboard />} />
-        <Route path="/evenements" element={<Dashboard />} />
+        <Route path="/sanitaire" element={<Sanitaire />} />
+        <Route path="/recoltes" element={<Recoltes />} />
+        <Route path="/rapports" element={<Rapports />} />
+        <Route path="/calendrier" element={<Calendrier />} />
       </Route>
       
       {/* Redirect root to dashboard or login */}
-      <Route path="/" element={<Navigate to="/dashboard" replace />} />
       <Route path="*" element={<Navigate to="/dashboard" replace />} />
     </Routes>
   );

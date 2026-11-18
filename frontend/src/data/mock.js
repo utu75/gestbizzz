@@ -1,9 +1,9 @@
-// GESTBIZZ - Mock Data for Apiculture Management
+// HKBEES - données fictives de démonstration
 
 export const mockUser = {
   id: '1',
   name: 'Jean-Pierre Dupont',
-  email: 'jp.dupont@gestbizz.fr',
+  email: 'apiculteur@hkbees.local',
   role: 'Apiculteur',
   avatar: 'JD',
   exploitation: 'Rucher du Soleil',

@@ -13,8 +13,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../components/
 import { Label } from '../components/ui/label';
 
 const mockRecoltes = [
-  { id: '1', date: '2025-07-15', rucher: 'H2', type: 'Miel Toutes fleurs', quantite: 15, lot: 'LOT-2025-001' },
-  { id: '2', date: '2025-08-20', rucher: 'H1', type: 'Miel Acacia', quantite: 22, lot: 'LOT-2025-002' },
+  { id: '1', date: '2026-07-15', rucher: 'H2', type: 'Miel Toutes fleurs', quantite: 15, lot: 'LOT-2026-001' },
+  { id: '2', date: '2026-08-20', rucher: 'H1', type: 'Miel Acacia', quantite: 22, lot: 'LOT-2026-002' },
 ];
 
 const Miellerie = () => {
@@ -75,7 +75,7 @@ const Miellerie = () => {
                 <Calendar className="w-5 h-5 text-blue-600" />
               </div>
               <div>
-                <p className="text-2xl font-bold text-slate-800">2025</p>
+                <p className="text-2xl font-bold text-slate-800">2026</p>
                 <p className="text-sm text-slate-500">Saison active</p>
               </div>
             </div>

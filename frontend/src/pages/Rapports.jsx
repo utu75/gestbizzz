@@ -49,7 +49,7 @@ const StatWidget = ({ title, value, subtitle, color }) => (
 );
 
 const Rapports = () => {
-  const [selectedYear, setSelectedYear] = useState('2024');
+  const [selectedYear, setSelectedYear] = useState('2026');
   const [selectedRucher, setSelectedRucher] = useState('all');
 
   const reports = [
@@ -96,7 +96,8 @@ const Rapports = () => {
             onChange={(e) => setSelectedYear(e.target.value)}
             className="px-4 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
           >
-            <option value="2024">Année 2024</option>
+            <option value="2026">Année 2026</option>
+            <option value="2025">Année 2025</option>
             <option value="2023">Année 2023</option>
             <option value="2022">Année 2022</option>
           </select>

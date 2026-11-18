@@ -13,6 +13,10 @@ import {
   Settings,
   Sparkles,
   Warehouse,
+  HeartPulse,
+  FileBarChart,
+  Wheat,
+  X,
 } from "lucide-react";
 import { useAuth } from "../../contexts/AuthContext";
 
@@ -22,6 +26,7 @@ const groups = [
     [
       [LayoutDashboard, "Vue d’ensemble", "/dashboard"],
       [CalendarDays, "Visites & tâches", "/visites"],
+      [CalendarDays, "Calendrier", "/calendrier"],
     ],
   ],
   [
@@ -29,12 +34,14 @@ const groups = [
     [
       [MapPin, "Ruchers", "/ruchers"],
       [Hexagon, "Ruches & colonies", "/ruches"],
+      [HeartPulse, "Registre sanitaire", "/sanitaire"],
     ],
   ],
   [
     "Production",
     [
       [Droplets, "Miellerie & lots", "/miellerie"],
+      [Wheat, "Récoltes", "/recoltes"],
       [Package, "Matériel", "/inventaire"],
       [Warehouse, "Atelier", "/atelier"],
     ],
@@ -42,17 +49,17 @@ const groups = [
   [
     "Administration",
     [
-      [Sparkles, "Rapports", "/rapports"],
+      [FileBarChart, "Rapports", "/rapports"],
       [CreditCard, "Offre & facturation", "/offres"],
       [Settings, "Paramètres", "/parametres"],
     ],
   ],
 ];
 
-const Sidebar = () => {
+const Sidebar = ({ mobile = false, onClose }) => {
   const { user, logout } = useAuth();
   return (
-    <aside className="fixed inset-y-0 left-0 z-50 hidden w-64 flex-col bg-[#102219] text-white lg:flex">
+    <aside className={`fixed inset-y-0 left-0 z-50 w-72 flex-col bg-[#102219] text-white lg:w-64 ${mobile ? "flex shadow-2xl" : "hidden lg:flex"}`}>
       <div className="flex h-16 items-center gap-3 border-b border-white/10 px-5">
         <div className="grid h-9 w-9 place-items-center rounded-lg bg-[#e4ad3e] text-[#102219]">
           <Hexagon className="h-5 w-5" />
@@ -61,6 +68,7 @@ const Sidebar = () => {
           <p className="font-black tracking-tight">HKBEES</p>
           <p className="text-[10px] text-[#8ca095]">BY HK GROUP</p>
         </div>
+        {mobile && <button aria-label="Fermer le menu" onClick={onClose} className="ml-auto grid h-9 w-9 place-items-center rounded-lg bg-white/10"><X className="h-4 w-4" /></button>}
       </div>
       <div className="border-b border-white/10 px-5 py-5">
         <p className="text-[9px] font-bold uppercase tracking-[.18em] text-[#789083]">
@@ -84,6 +92,7 @@ const Sidebar = () => {
               <NavLink
                 key={path}
                 to={path}
+                onClick={onClose}
                 className={({ isActive }) =>
                   `mb-1 flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition ${isActive ? "bg-white/10 font-bold text-white" : "text-[#b5c2bb] hover:bg-white/5 hover:text-white"}`
                 }

@@ -30,7 +30,7 @@ const Login = () => {
         <div className="absolute -right-8 top-44 h-52 w-52 rounded-full border border-[#e6b34a]/20" />
         <div className="relative flex items-center gap-3">
           <div className="grid h-11 w-11 place-items-center rounded-xl bg-[#e5ae3c] text-[#12241b]"><Hexagon /></div>
-          <div><p className="text-xl font-black tracking-tight">HKBEES</p><p className="text-xs text-[#94a69d]">A product by HK Group</p></div>
+          <div><p className="text-xl font-black tracking-tight">HKBEES</p><p className="text-xs text-[#94a69d]">Un projet développé par HK Group</p></div>
         </div>
         <div className="relative max-w-xl">
           <p className="mb-4 text-xs font-bold uppercase tracking-[.24em] text-[#e5ae3c]">Bee farm operating system</p>
@@ -45,7 +45,7 @@ const Login = () => {
 
       <section className="flex min-h-screen items-center justify-center px-5 py-10 sm:px-10">
         <div className="w-full max-w-md">
-          <div className="mb-8 flex items-center gap-3 lg:hidden"><div className="grid h-10 w-10 place-items-center rounded-xl bg-[#173426] text-[#e5ae3c]"><Hexagon className="h-5 w-5"/></div><div><p className="font-black">HKBEES</p><p className="text-xs text-slate-500">A product by HK Group</p></div></div>
+          <div className="mb-8 flex items-center gap-3 lg:hidden"><div className="grid h-10 w-10 place-items-center rounded-xl bg-[#173426] text-[#e5ae3c]"><Hexagon className="h-5 w-5"/></div><div><p className="font-black">HKBEES</p><p className="text-xs text-slate-500">Un projet développé par HK Group</p></div></div>
           <p className="text-xs font-bold uppercase tracking-[.18em] text-[#9a6a0a]">Espace sécurisé</p>
           <h2 className="mt-2 text-3xl font-black tracking-tight">Accéder à votre exploitation</h2>
           <p className="mt-2 text-sm leading-relaxed text-slate-500">Connectez-vous pour retrouver vos ruchers, tâches et alertes terrain.</p>
