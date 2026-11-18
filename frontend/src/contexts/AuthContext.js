@@ -3,13 +3,13 @@ import React, { createContext, useContext, useEffect, useMemo, useState } from '
 const AuthContext = createContext(null);
 const STORAGE_KEY = 'hkbees_demo_session';
 
-const pilotUser = {
-  id: 'pilot-haiti-melina',
-  name: 'Équipe pilote',
-  email: 'pilote@hkbees.local',
+const previewUser = {
+  id: 'hkbees-preview',
+  name: 'Équipe apicole',
+  email: 'demo@hkbees.local',
   role: 'Propriétaire',
   avatar: 'HM',
-  exploitation: 'Exploitation agricole Haïti Mélina',
+  exploitation: 'Exploitation de démonstration',
   plan: 'pro',
   isAdmin: false,
   twoFactorEnabled: false,
@@ -32,12 +32,12 @@ export const AuthProvider = ({ children }) => {
 
   const login = async () => ({
     success: false,
-    error: "L'authentification sécurisée sera connectée à l'API HKBEES. Utilisez le pilote pour la prévisualisation.",
+    error: "L'authentification sécurisée sera connectée à l'API HKBEES. Utilisez la démonstration pour la prévisualisation.",
   });
 
-  const enterPilot = async () => {
-    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(pilotUser));
-    setUser(pilotUser);
+  const enterPreview = async () => {
+    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(previewUser));
+    setUser(previewUser);
     return { success: true };
   };
 
@@ -47,7 +47,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const value = useMemo(
-    () => ({ user, login, enterPilot, logout, loading }),
+    () => ({ user, login, enterPreview, logout, loading }),
     [user, loading]
   );
 

@@ -50,7 +50,7 @@ L'authentification pourra évoluer vers un SSO HK Group, mais chaque produit con
 4. Construire l'API PostgreSQL.
 5. Migrer les écrans module par module.
 6. Ajouter l'application mobile hors ligne.
-7. Tester avec Haïti Mélina.
+7. Tester avec un panel d'apiculteurs propre à HKBEES.
 8. Basculer seulement après validation et export de secours.
 
 ## Règles de Git

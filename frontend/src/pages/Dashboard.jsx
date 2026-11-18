@@ -1,20 +1,255 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { AlertTriangle, ArrowUpRight, CalendarDays, CheckCircle2, CloudSun, Droplets, Hexagon, MapPin, Mic, Plus, QrCode, Scale, ShieldCheck, Sparkles, WifiOff } from 'lucide-react';
-import { mockRuchers, mockRuches } from '../data/mock';
-import { useAuth } from '../contexts/AuthContext';
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import {
+  AlertTriangle,
+  ArrowUpRight,
+  CalendarDays,
+  CheckCircle2,
+  CloudSun,
+  Droplets,
+  Hexagon,
+  MapPin,
+  Mic,
+  Plus,
+  QrCode,
+  Scale,
+  ShieldCheck,
+  Sparkles,
+  WifiOff,
+} from "lucide-react";
+import { mockRuchers, mockRuches } from "../data/mock";
+import { useAuth } from "../contexts/AuthContext";
 
-const kpis=[['Ruchers actifs',mockRuchers.length,'Sites suivis',MapPin],['Colonies',mockRuches.length,'Inventaire pilote',Hexagon],['Visites à faire',4,'Cette semaine',CalendarDays],['Alertes',2,'À contrôler',AlertTriangle]];
-const Dashboard=()=>{const {user}=useAuth();const navigate=useNavigate();return <div className="mx-auto max-w-[1500px] space-y-5 p-4 sm:p-6 lg:p-7">
-  <section className="grid overflow-hidden rounded-2xl bg-[#173426] text-white lg:grid-cols-[1.3fr_.7fr]"><div className="p-6 sm:p-8"><div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[.18em] text-[#e9bd62]"><Sparkles className="h-4 w-4"/>Centre de pilotage</div><h2 className="mt-3 max-w-2xl text-2xl font-black tracking-tight sm:text-3xl">Bonjour, {user?.name}. Votre exploitation est prête pour la tournée.</h2><p className="mt-3 max-w-2xl text-sm leading-relaxed text-[#bdcdc4]">Les données du pilote sont synchronisées. Deux colonies demandent une vérification avant la prochaine intervention.</p><div className="mt-6 flex flex-wrap gap-3"><button onClick={()=>navigate('/visites')} className="flex items-center gap-2 rounded-lg bg-[#e4ad3e] px-4 py-2.5 text-sm font-black text-[#16251e]"><Mic className="h-4 w-4"/>Démarrer une visite vocale</button><button onClick={()=>navigate('/ruches')} className="flex items-center gap-2 rounded-lg border border-white/20 px-4 py-2.5 text-sm font-bold"><QrCode className="h-4 w-4"/>Scanner une ruche</button></div></div><div className="border-t border-white/10 bg-white/[.04] p-6 lg:border-l lg:border-t-0"><div className="flex items-center justify-between"><span className="text-xs font-bold text-[#9db0a6]">MÉTÉO DU RUCHER</span><CloudSun className="text-[#e4ad3e]"/></div><p className="mt-5 text-4xl font-black">27°C</p><p className="mt-1 text-sm text-[#bdcdc4]">Vent faible · conditions favorables</p><div className="mt-7 grid grid-cols-2 gap-3 text-xs"><div className="rounded-lg bg-white/5 p-3"><p className="text-[#83998d]">Humidité</p><p className="mt-1 font-bold">68 %</p></div><div className="rounded-lg bg-white/5 p-3"><p className="text-[#83998d]">Fenêtre</p><p className="mt-1 font-bold">08:00–11:30</p></div></div></div></section>
+const kpis = [
+  ["Ruchers actifs", mockRuchers.length, "Sites suivis", MapPin],
+  ["Colonies", mockRuches.length, "Inventaire de démonstration", Hexagon],
+  ["Visites à faire", 4, "Cette semaine", CalendarDays],
+  ["Alertes", 2, "À contrôler", AlertTriangle],
+];
+const Dashboard = () => {
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  return (
+    <div className="mx-auto max-w-[1500px] space-y-5 p-4 sm:p-6 lg:p-7">
+      <section className="grid overflow-hidden rounded-2xl bg-[#173426] text-white lg:grid-cols-[1.3fr_.7fr]">
+        <div className="p-6 sm:p-8">
+          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[.18em] text-[#e9bd62]">
+            <Sparkles className="h-4 w-4" />
+            Centre de pilotage
+          </div>
+          <h2 className="mt-3 max-w-2xl text-2xl font-black tracking-tight sm:text-3xl">
+            Bonjour, {user?.name}. Votre exploitation est prête pour la tournée.
+          </h2>
+          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[#bdcdc4]">
+            Les données de démonstration sont synchronisées. Deux colonies demandent
+            une vérification avant la prochaine intervention.
+          </p>
+          <div className="mt-6 flex flex-wrap gap-3">
+            <button
+              onClick={() => navigate("/visites")}
+              className="flex items-center gap-2 rounded-lg bg-[#e4ad3e] px-4 py-2.5 text-sm font-black text-[#16251e]"
+            >
+              <Mic className="h-4 w-4" />
+              Démarrer une visite vocale
+            </button>
+            <button
+              onClick={() => navigate("/ruches")}
+              className="flex items-center gap-2 rounded-lg border border-white/20 px-4 py-2.5 text-sm font-bold"
+            >
+              <QrCode className="h-4 w-4" />
+              Scanner une ruche
+            </button>
+          </div>
+        </div>
+        <div className="border-t border-white/10 bg-white/[.04] p-6 lg:border-l lg:border-t-0">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-bold text-[#9db0a6]">
+              MÉTÉO DU RUCHER
+            </span>
+            <CloudSun className="text-[#e4ad3e]" />
+          </div>
+          <p className="mt-5 text-4xl font-black">27°C</p>
+          <p className="mt-1 text-sm text-[#bdcdc4]">
+            Vent faible · conditions favorables
+          </p>
+          <div className="mt-7 grid grid-cols-2 gap-3 text-xs">
+            <div className="rounded-lg bg-white/5 p-3">
+              <p className="text-[#83998d]">Humidité</p>
+              <p className="mt-1 font-bold">68 %</p>
+            </div>
+            <div className="rounded-lg bg-white/5 p-3">
+              <p className="text-[#83998d]">Fenêtre</p>
+              <p className="mt-1 font-bold">08:00–11:30</p>
+            </div>
+          </div>
+        </div>
+      </section>
 
-  <section className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">{kpis.map(([label,value,sub,Icon],i)=><article key={label} className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm"><div className="flex items-start justify-between"><div><p className="text-xs font-bold uppercase tracking-wide text-slate-500">{label}</p><p className="mt-2 text-3xl font-black text-slate-900">{value}</p></div><div className={`grid h-9 w-9 place-items-center rounded-lg ${i===3?'bg-red-50 text-red-700':'bg-amber-50 text-amber-700'}`}><Icon className="h-4 w-4"/></div></div><p className="mt-3 border-t border-slate-100 pt-3 text-xs text-slate-400">{sub}</p></article>)}</section>
+      <section className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+        {kpis.map(([label, value, sub, Icon], i) => (
+          <article
+            key={label}
+            className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm"
+          >
+            <div className="flex items-start justify-between">
+              <div>
+                <p className="text-xs font-bold uppercase tracking-wide text-slate-500">
+                  {label}
+                </p>
+                <p className="mt-2 text-3xl font-black text-slate-900">
+                  {value}
+                </p>
+              </div>
+              <div
+                className={`grid h-9 w-9 place-items-center rounded-lg ${i === 3 ? "bg-red-50 text-red-700" : "bg-amber-50 text-amber-700"}`}
+              >
+                <Icon className="h-4 w-4" />
+              </div>
+            </div>
+            <p className="mt-3 border-t border-slate-100 pt-3 text-xs text-slate-400">
+              {sub}
+            </p>
+          </article>
+        ))}
+      </section>
 
-  <section className="grid gap-5 xl:grid-cols-[1.35fr_.65fr]"><article className="rounded-xl border border-slate-200 bg-white shadow-sm"><div className="flex items-center justify-between border-b border-slate-100 px-5 py-4"><div><h3 className="font-black">Priorités terrain</h3><p className="text-xs text-slate-400">Actions recommandées aujourd’hui</p></div><button className="text-xs font-bold text-[#8b6111]">Voir le planning</button></div><div className="divide-y divide-slate-100">{[[AlertTriangle,'Ruche R004','Colonie faible · contrôle des réserves','Haute','text-red-700 bg-red-50'],[Scale,'Rucher H2','Variation de poids à confirmer','Moyenne','text-amber-700 bg-amber-50'],[CheckCircle2,'Lot LOT-2026-001','Analyse humidité à valider','Qualité','text-emerald-700 bg-emerald-50']].map(([Icon,title,text,badge,color])=><div key={title} className="flex items-center gap-4 px-5 py-4"><div className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-slate-50"><Icon className="h-4 w-4 text-slate-600"/></div><div className="min-w-0 flex-1"><p className="text-sm font-bold">{title}</p><p className="truncate text-xs text-slate-500">{text}</p></div><span className={`rounded-full px-2.5 py-1 text-[10px] font-bold ${color}`}>{badge}</span><ArrowUpRight className="h-4 w-4 text-slate-300"/></div>)}</div></article>
-  <article className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm"><div className="flex items-center justify-between"><div><h3 className="font-black">Offre {user?.plan}</h3><p className="text-xs text-slate-400">Utilisation du mois</p></div><ShieldCheck className="h-5 w-5 text-emerald-700"/></div><div className="mt-6 space-y-5"><Usage label="Ruches" value={mockRuches.length} max={399}/><Usage label="Utilisateurs" value={1} max={3}/><Usage label="Crédits IA" value={86} max={300}/></div><div className="mt-6 rounded-lg bg-[#f3f7f4] p-4"><div className="flex items-center gap-2 text-xs font-bold text-[#244b37]"><WifiOff className="h-4 w-4"/>Mode hors connexion prêt</div><p className="mt-1 text-[11px] leading-relaxed text-slate-500">Les prochaines visites peuvent être enregistrées sans réseau.</p></div></article></section>
+      <section className="grid gap-5 xl:grid-cols-[1.35fr_.65fr]">
+        <article className="rounded-xl border border-slate-200 bg-white shadow-sm">
+          <div className="flex items-center justify-between border-b border-slate-100 px-5 py-4">
+            <div>
+              <h3 className="font-black">Priorités terrain</h3>
+              <p className="text-xs text-slate-400">
+                Actions recommandées aujourd’hui
+              </p>
+            </div>
+            <button className="text-xs font-bold text-[#8b6111]">
+              Voir le planning
+            </button>
+          </div>
+          <div className="divide-y divide-slate-100">
+            {[
+              [
+                AlertTriangle,
+                "Ruche R004",
+                "Colonie faible · contrôle des réserves",
+                "Haute",
+                "text-red-700 bg-red-50",
+              ],
+              [
+                Scale,
+                "Rucher H2",
+                "Variation de poids à confirmer",
+                "Moyenne",
+                "text-amber-700 bg-amber-50",
+              ],
+              [
+                CheckCircle2,
+                "Lot LOT-2026-001",
+                "Analyse humidité à valider",
+                "Qualité",
+                "text-emerald-700 bg-emerald-50",
+              ],
+            ].map(([Icon, title, text, badge, color]) => (
+              <div key={title} className="flex items-center gap-4 px-5 py-4">
+                <div className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-slate-50">
+                  <Icon className="h-4 w-4 text-slate-600" />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="text-sm font-bold">{title}</p>
+                  <p className="truncate text-xs text-slate-500">{text}</p>
+                </div>
+                <span
+                  className={`rounded-full px-2.5 py-1 text-[10px] font-bold ${color}`}
+                >
+                  {badge}
+                </span>
+                <ArrowUpRight className="h-4 w-4 text-slate-300" />
+              </div>
+            ))}
+          </div>
+        </article>
+        <article className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="font-black">Offre {user?.plan}</h3>
+              <p className="text-xs text-slate-400">Utilisation du mois</p>
+            </div>
+            <ShieldCheck className="h-5 w-5 text-emerald-700" />
+          </div>
+          <div className="mt-6 space-y-5">
+            <Usage label="Ruches" value={mockRuches.length} max={399} />
+            <Usage label="Utilisateurs" value={1} max={3} />
+            <Usage label="Crédits IA" value={86} max={300} />
+          </div>
+          <div className="mt-6 rounded-lg bg-[#f3f7f4] p-4">
+            <div className="flex items-center gap-2 text-xs font-bold text-[#244b37]">
+              <WifiOff className="h-4 w-4" />
+              Mode hors connexion prêt
+            </div>
+            <p className="mt-1 text-[11px] leading-relaxed text-slate-500">
+              Les prochaines visites peuvent être enregistrées sans réseau.
+            </p>
+          </div>
+        </article>
+      </section>
 
-  <section className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">{[[MapPin,'Gérer les ruchers','Localisation et transhumance','/ruchers'],[Hexagon,'Suivre les colonies','Reines, santé et historique','/ruches'],[Droplets,'Tracer le miel','Récoltes, cuves et lots','/miellerie'],[Plus,'Ajouter une opération','Visite, traitement ou tâche','/visites']].map(([Icon,title,sub,path])=><button key={title} onClick={()=>navigate(path)} className="group flex items-center gap-3 rounded-xl border border-slate-200 bg-white p-4 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-amber-300 hover:shadow-md"><div className="grid h-10 w-10 place-items-center rounded-lg bg-[#edf3ef] text-[#24513a]"><Icon className="h-4 w-4"/></div><div><p className="text-sm font-black group-hover:text-[#8b6111]">{title}</p><p className="text-[11px] text-slate-400">{sub}</p></div></button>)}</section>
- </div>};
+      <section className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+        {[
+          [
+            MapPin,
+            "Gérer les ruchers",
+            "Localisation et transhumance",
+            "/ruchers",
+          ],
+          [
+            Hexagon,
+            "Suivre les colonies",
+            "Reines, santé et historique",
+            "/ruches",
+          ],
+          [Droplets, "Tracer le miel", "Récoltes, cuves et lots", "/miellerie"],
+          [
+            Plus,
+            "Ajouter une opération",
+            "Visite, traitement ou tâche",
+            "/visites",
+          ],
+        ].map(([Icon, title, sub, path]) => (
+          <button
+            key={title}
+            onClick={() => navigate(path)}
+            className="group flex items-center gap-3 rounded-xl border border-slate-200 bg-white p-4 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-amber-300 hover:shadow-md"
+          >
+            <div className="grid h-10 w-10 place-items-center rounded-lg bg-[#edf3ef] text-[#24513a]">
+              <Icon className="h-4 w-4" />
+            </div>
+            <div>
+              <p className="text-sm font-black group-hover:text-[#8b6111]">
+                {title}
+              </p>
+              <p className="text-[11px] text-slate-400">{sub}</p>
+            </div>
+          </button>
+        ))}
+      </section>
+    </div>
+  );
+};
 
-const Usage=({label,value,max})=><div><div className="mb-2 flex justify-between text-xs"><span className="font-bold text-slate-600">{label}</span><span className="text-slate-400">{value} / {max}</span></div><div className="h-1.5 overflow-hidden rounded-full bg-slate-100"><div className="h-full rounded-full bg-[#d9a43d]" style={{width:`${Math.min(100,value/max*100)}%`}}/></div></div>;
+const Usage = ({ label, value, max }) => (
+  <div>
+    <div className="mb-2 flex justify-between text-xs">
+      <span className="font-bold text-slate-600">{label}</span>
+      <span className="text-slate-400">
+        {value} / {max}
+      </span>
+    </div>
+    <div className="h-1.5 overflow-hidden rounded-full bg-slate-100">
+      <div
+        className="h-full rounded-full bg-[#d9a43d]"
+        style={{ width: `${Math.min(100, (value / max) * 100)}%` }}
+      />
+    </div>
+  </div>
+);
 export default Dashboard;

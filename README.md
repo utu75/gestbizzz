@@ -16,6 +16,6 @@ Le dépôt contient un prototype historique React/FastAPI conservé pour audit e
 - Produit : **HKBEES**.
 - Porteur et future entité commerciale : **HK Group**, actuellement en finalisation.
 - Plateforme mère : marketplace HK Group hébergée sur VPS Hostinger.
-- Pilote métier : **Exploitation agricole de Haïti Mélina**, dénomination officielle à confirmer.
+- Validation métier HKBEES : panel d'apiculteurs à sélectionner séparément des autres projets pilotes de HK Group.
 
 Aucun secret, export client, sauvegarde ou donnée de rucher ne doit être commité dans ce dépôt.

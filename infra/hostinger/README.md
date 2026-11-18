@@ -43,6 +43,6 @@ PostgreSQL et les médias doivent disposer de sauvegardes chiffrées hors du VPS
 - politiques de confidentialité et CGV publiées ;
 - restauration de sauvegarde démontrée ;
 - 2FA obligatoire pour les comptes sensibles ;
-- pilote Haïti Mélina séparé de la production commerciale ;
+- environnement de validation HKBEES séparé de la production commerciale ;
 - monitoring, alertes et page de statut opérationnels.
 
